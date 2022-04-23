@@ -1,12 +1,20 @@
 import jwt
 import bcrypt
 import datetime
-from app import app, db
+from extensions import db
 from models import User
 from decorators import token_required
 from flask import Blueprint, request, make_response, jsonify, redirect
 
 auth = Blueprint("auth", __name__, static_folder="static", template_folder="templates")
+auth.config = {}
+
+
+@auth.record
+def record_params(setup_state):
+    app = setup_state.app
+    print(app.config)
+    auth.config = app.config
 
 
 @auth.route("/all", methods=["GET"])
@@ -32,7 +40,7 @@ def login():
     token = request.cookies.get("token")
     if token is not None:
         try:
-            jwt.decode(token, app.config["SECRET_KEY"], algorithms=["HS256"])
+            jwt.decode(token, auth.config["SECRET_KEY"], algorithms=["HS256"])
             return jsonify({"message": "Logged in already!"}), 400
         except:
             pass
@@ -48,7 +56,8 @@ def login():
 
     token_expire_time = 60 * 60 * 24
     token_expire_data = datetime.datetime.utcnow() + datetime.timedelta(seconds=token_expire_time)
-    token = jwt.encode({"user_email": user.email, "exp": token_expire_data}, app.config["SECRET_KEY"],
+    print(auth.config["SECRET_KEY"])
+    token = jwt.encode({"user_email": user.email, "exp": token_expire_data}, auth.config["SECRET_KEY"],
                        algorithm="HS256")
 
     res = make_response(jsonify({"message": "Logged In", "token": token}), 200)

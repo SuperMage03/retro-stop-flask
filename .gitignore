@@ -1,6 +1,6 @@
-*.db
-*.pyc
-app.py
 protected/rom_files/
 static/rom_images/
 .idea
+*.db
+*.pyc
+config.py

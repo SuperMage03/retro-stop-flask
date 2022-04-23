@@ -2,7 +2,8 @@ import math
 import os
 import uuid
 import stripe
-from app import app, db
+from app import app
+from extensions import db
 from models import Seller, Product
 from decorators import token_required
 from flask import Blueprint, request, make_response, jsonify, redirect, send_from_directory
