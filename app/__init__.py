@@ -12,7 +12,6 @@ def create_app():
             template_folder="/template"
             )
 
-    print(app.root_path)
     set_config(app)
     register_extensions(app)
     return app

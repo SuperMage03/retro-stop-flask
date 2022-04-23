@@ -107,7 +107,6 @@ def add_product(current_user, current_seller):
     rom_name = f"{serial_id}.{rom_ext}"
 
     try:
-        print(os.path.join(app.root_path, "protected", "rom_files", rom_name))
         image.save(os.path.join(app.root_path, "static", "rom_images", image_name))
         rom.save(os.path.join(app.root_path, "protected", "rom_files", rom_name))
 
