@@ -39,7 +39,7 @@ class Product(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     serial_id = db.Column(db.String(32), nullable=False)
 
-    stripe_account_id = db.Column(db.String(100), unique=True, nullable=False)
+    stripe_account_id = db.Column(db.String(100), unique=False, nullable=False)
     stripe_product_id = db.Column(db.String(100), unique=True, nullable=False)
     stripe_price_id = db.Column(db.String(100), unique=True, nullable=False)
 

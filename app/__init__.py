@@ -5,12 +5,12 @@ from extensions import db
 
 def create_app():
     app = Flask(
-            __name__,
-            root_path=os.getcwd(),
-            static_url_path="/",
-            static_folder="/static",
-            template_folder="/template"
-            )
+        __name__,
+        root_path=os.getcwd(),
+        static_url_path="/",
+        static_folder="/static",
+        template_folder="/template"
+    )
 
     set_config(app)
     register_extensions(app)
@@ -31,6 +31,9 @@ def set_config(app):
 
 
 app = create_app()
+
+from app.views import views
+app.register_blueprint(views, url_prefix="/")
 
 from app.auth import auth
 

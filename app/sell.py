@@ -145,7 +145,7 @@ def add_product(current_user, current_seller):
             rom_name=rom_name,
             image_name=image_name
         )
-
+        print(new_prod)
         db.session.add(new_prod)
         db.session.commit()
 

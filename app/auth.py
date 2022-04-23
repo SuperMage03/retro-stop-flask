@@ -1,8 +1,9 @@
 import jwt
 import bcrypt
 import datetime
-from extensions import db
 from models import User
+from extensions import db
+from copy import deepcopy
 from decorators import token_required
 from flask import Blueprint, request, make_response, jsonify, redirect
 
@@ -13,8 +14,7 @@ auth.config = {}
 @auth.record
 def record_params(setup_state):
     app = setup_state.app
-    print(app.config)
-    auth.config = app.config
+    auth.config = deepcopy(app.config)
 
 
 @auth.route("/all", methods=["GET"])
@@ -56,7 +56,6 @@ def login():
 
     token_expire_time = 60 * 60 * 24
     token_expire_data = datetime.datetime.utcnow() + datetime.timedelta(seconds=token_expire_time)
-    print(auth.config["SECRET_KEY"])
     token = jwt.encode({"user_email": user.email, "exp": token_expire_data}, auth.config["SECRET_KEY"],
                        algorithm="HS256")
 
